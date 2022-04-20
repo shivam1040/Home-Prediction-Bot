@@ -21,9 +21,7 @@ A bot based on microservices architecture featuring batch processing, data strea
 
 10. To consume the services, the application should be initiallized in the order of, "home-price-prediction-bot-service-registry" (Port:8761) -> "home-price-prediction-bot-data" (Port:8082) -> "home-price-prediction-bot-query" (Port:8081) -> "home-price-prediction-bot-gateway" (Port:8083).
 
-11. At current due to monetory/physical limitations this microservices is hosted on a local server. Thus latency and downtimes are inevitable. Please let me know if the service/s is/are down before testing.
-
-12. Enpoints defined in "home-price-prediction-bot-data",  
+11. Enpoints defined in "home-price-prediction-bot-data",  
 	a. "/job", GET, private, to batch insert CSV into DB, please define DB and file location when the service is deployed on a new system, response time: 1.5-2secs/5000 records  
 	b. "/all", GET, partner("home-price-prediction-bot-query" service), fetch all the records from DB, modify a field and stream the data to output source, response time: 1-2.5secs  
 	c. "/budgetHomes?min=xx&max=xx", GET, partner("home-price-prediction-bot-query" service), fetch all the records from DB in the range of float min & float max for a particular field, response time: 250ms-550ms  
@@ -31,7 +29,7 @@ A bot based on microservices architecture featuring batch processing, data strea
 	e. "/ageHomes?year=xx", GET, partner("home-price-prediction-bot-query" service), fetch all the records from DB greater than int year for a particular field, response time:
 	   250ms-550ms
 
-13. Enpoints defined in "home-price-prediction-bot-query",  
+12. Enpoints defined in "home-price-prediction-bot-query",  
 	a. "/all", GET, secured public, fetch all the records from DB, modify a field and stream the data to output source, response time: 1-2.5secs  
 	b. "/budgetHomes", POST, secured public, fetch all the records from DB in the range of float min & float max for a particular field, response time: 250ms-550ms  
 		POST format: {
@@ -47,8 +45,8 @@ A bot based on microservices architecture featuring batch processing, data strea
         				"year":int_number
 				 }  
 
-14. All the responses for endpoints excluding "/job" will be in JSON and they will contain all the fields and its data from DB, mapped 1 to 1 to CSV.
+13. All the responses for endpoints excluding "/job" will be in JSON and they will contain all the fields and its data from DB, mapped 1 to 1 to CSV.
 
-15. These microservices are accesible via http://localhost:8083
+14. These microservices are accesible via http://localhost:8083
 
-16. To pass the authentication, add this API key, "7a8a2508-04fd-49c2-bbf8-74fb33abee5b" in the request header and give the header name as "apiKey".
+15. To pass the authentication, add this API key, "7a8a2508-04fd-49c2-bbf8-74fb33abee5b" in the request header and give the header name as "apiKey".
