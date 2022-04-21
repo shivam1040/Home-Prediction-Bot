@@ -34,10 +34,10 @@ public class Filter implements GlobalFilter, Ordered {
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		List<String> apiKey=exchange.getRequest().getHeaders().get("apiKey");
-		
-		if(!CollectionUtils.isEmpty(apiKey)) {
-			Api api=apiRepository.getById(apiKey.get(0));
-			if(api.getKey().equals(apiKey.get(0)));
+		Optional<Api> optional=apiRepository.findById(apiKey.get(0));
+		if(!CollectionUtils.isEmpty(apiKey) && !optional.isEmpty()) {
+			Api api=optional.get();
+			if(api.getKey().equals(apiKey.get(0))) 
 				return chain.filter(exchange);
 		}
 		throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
